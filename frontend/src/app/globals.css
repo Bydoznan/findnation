@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-bebas-neue: var(--font-bebas-neue);
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+
+  padding: 1rem;
+}
