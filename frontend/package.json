@@ -1,8 +1,14 @@
 {
-  "name": "hackathon-frontend",
+  "name": "lostfound-frontend",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx serve -s ."
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000"
   },
-  "dependencies": {}
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
 }
