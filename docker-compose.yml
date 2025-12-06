@@ -18,7 +18,7 @@ services:
   backend:
     build: ./backend
     environment:
-      DATABASE_URL: postgresql://lostfound:lostfoundpass@postgres:5432/lostfound_db
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
     depends_on:
       - postgres
     ports:

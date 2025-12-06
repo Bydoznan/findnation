@@ -5,7 +5,7 @@ from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr, constr, validator
+from pydantic import BaseModel, EmailStr, Field, field_validator
 
 from sqlalchemy import create_engine, MetaData, Table, Column, String, Date, Text, insert, select
 from sqlalchemy.dialects.postgresql import UUID
@@ -63,15 +63,15 @@ class LoginIn(BaseModel):
     email: EmailStr
 
 class ItemIn(BaseModel):
-    title: constr(strip_whitespace=True, min_length=1, max_length=150)
-    category: constr(strip_whitespace=True, min_length=1, max_length=50)
-    dominant_color: constr(strip_whitespace=True, min_length=1, max_length=30)
-    location_found: constr(strip_whitespace=True, min_length=1)
+    title: str = Field(..., min_length=1, max_length=150, strip_whitespace=True)
+    category: str = Field(..., min_length=1, max_length=50, strip_whitespace=True)
+    dominant_color: str = Field(..., min_length=1, max_length=30, strip_whitespace=True)
+    location_found: str = Field(..., min_length=1, strip_whitespace=True)
     date_found: Optional[date] = None
     description: Optional[str] = None
     distinctive_marks: Optional[str] = None
 
-    @validator("date_found", pre=True, always=True)
+    @field_validator("date_found")
     def set_default_date(cls, v):
         if v is None:
             return date.today()
@@ -80,7 +80,7 @@ class ItemIn(BaseModel):
             return datetime.fromisoformat(v).date()
         return v
 
-    @validator("date_found")
+    @field_validator("date_found")
     def date_not_future(cls, v):
         if v > date.today():
             raise ValueError("date_found cannot be in the future")
