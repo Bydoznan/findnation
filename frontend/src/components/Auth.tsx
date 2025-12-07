@@ -1,23 +1,42 @@
-import ReportFormInput from '@/components/ReportFormInput';
+'use client';
+
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+
+type AuthFormData = {
+  login: string;
+  password: string;
+};
 
 const Auth = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthFormData>();
+
+  const onSubmit = (data: AuthFormData) => console.log(data);
+
   return (
     <section className='h-screen-wo-topbar flex w-full'>
       <div className='flex w-3/10 flex-col items-start justify-start px-16 pt-20'>
         <h1 className='font-bebas-neue mb-8 text-5xl font-bold text-neutral-800'>
           LOGOWANIE
         </h1>
-        <form className='flex w-full flex-col items-start justify-start gap-4'>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className='flex w-full flex-col items-start justify-start gap-4'>
           <input
             type='text'
             className='h-12 w-full rounded-md border-2 border-black px-2'
             placeholder='Login'
+            {...register('login')}
           />
           <input
-            type='text'
+            type='password'
             className='h-12 w-full rounded-md border-2 border-black px-2'
             placeholder='Hasło'
+            {...register('password')}
           />
           <button
             type='submit'
