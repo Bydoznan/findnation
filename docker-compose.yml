@@ -1,37 +1,36 @@
-version: "3.9"
-
 services:
   backend:
     build:
       context: ./backend
-    container_name: lostfound-backend
+    container_name: findnation-backend
     restart: always
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "postgresql://lostfound:lostfoundpass@postgres:5432/lostfound_db"
+      DATABASE_URL: "postgresql://findnation:findnationpass@postgres:5432/findnation_db"
     ports:
       - "8000:8000"
     networks:
-      - lfnet
+      - findnation-net
 
   postgres:
     image: postgres:15
-    container_name: lostfound-postgres
+    container_name: findnation-postgres
     restart: always
     environment:
-      POSTGRES_USER: "lostfound"
-      POSTGRES_PASSWORD: "lostfoundpass"
-      POSTGRES_DB: "lostfound_db"
+      POSTGRES_USER: "findnation"
+      POSTGRES_PASSWORD: "findnationpass"
+      POSTGRES_DB: "findnation_db"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
     networks:
-      - lfnet
+      - findnation-net
 
 networks:
-  lfnet:
+  findnation-net:
 
 volumes:
   pgdata:
