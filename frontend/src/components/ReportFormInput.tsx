@@ -1,4 +1,4 @@
-import { FormData } from '@/components/ReportForm';
+import { FormData } from '@/app/dashboard/page';
 import { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 

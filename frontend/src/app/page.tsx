@@ -1,71 +1,62 @@
-import Auth from '@/components/Auth';
-import ReportForm from '@/components/ReportForm';
-import Image from 'next/image';
+'use client';
 
-const AllFuckingThingsOnOneSinglePageXD = () => {
+import { handleLogin } from '@/actions/login';
+import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+
+export type AuthFormData = {
+  email: string;
+  password: string;
+};
+
+const Auth = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthFormData>();
+
+  const onSubmit = (formData: AuthFormData) => {
+    handleLogin(formData);
+  };
+
   return (
-    <>
-      <header className='relative z-1 flex h-20 w-full items-center justify-between bg-white px-6'>
-        <div className='flex w-1/2 items-center justify-start gap-6'>
-          <div className='flex items-center justify-center gap-2'>
-            <Image
-              src='/godlo.png'
-              alt='godlo'
-              width={1280}
-              height={1506}
-              className='size-12 object-contain'
-            />
-            <p className='text-xl font-bold'>gov.pl</p>
-          </div>
-          <div className='h-14 w-0.5 rounded-full bg-red-500'></div>
-          <div>
-            <p className='font-semibold text-neutral-500'>
-              Serwis Rzeczypospolitej Polskiej
-            </p>
-          </div>
-        </div>
-        <div className='font-inter flex w-1/2 items-center justify-end gap-8 text-[12px] leading-3.5 font-semibold text-neutral-800'>
-          <div>
-            <Image
-              src='/fe.jpg'
-              alt='fundusze-europejskie'
-              width={1010}
-              height={576}
-              className='w-30'
-            />
-          </div>
-          <div className='flex items-center justify-center gap-2'>
-            <Image
-              src='/pl.png'
-              alt='polska'
-              width={2560}
-              height={1600}
-              className='w-15 border border-black'
-            />
-            <p>
-              Rzeczpospolita <br /> Polska
-            </p>
-          </div>
-          <div className='flex items-center justify-center gap-2'>
-            <Image
-              src='/eu.svg'
-              alt='europe'
-              width={810}
-              height={540}
-              className='w-14'
-            />
-            <p>
-              Dofinansowane przez <br /> Unię Europejską
-            </p>
-          </div>
-        </div>
-      </header>
-      <main className='flex h-full w-full justify-center'>
-        <Auth />
-        {/* <ReportForm /> */}
-      </main>
-    </>
+    <section className='h-screen-wo-topbar flex w-full'>
+      <div className='flex w-3/10 flex-col items-start justify-start px-16 pt-20'>
+        <h1 className='font-bebas-neue mb-8 text-5xl font-bold text-neutral-800'>
+          LOGOWANIE
+        </h1>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className='flex w-full flex-col items-start justify-start gap-4'>
+          <input
+            type='email'
+            className='h-12 w-full rounded-md border-2 border-black px-2'
+            placeholder='E-mail'
+            {...register('email')}
+          />
+          <input
+            type='password'
+            className='h-12 w-full rounded-md border-2 border-black px-2'
+            placeholder='Hasło'
+            {...register('password')}
+          />
+          <button
+            type='submit'
+            className='bg-custom-red font-bebas-neue my-4 h-12 w-40 rounded-md text-xl font-bold text-white'>
+            ZALOGUJ
+          </button>
+        </form>
+      </div>
+      <div className='relative z-0 w-7/10 overflow-hidden object-contain shadow-[0_0_10px_1px_black]'>
+        <Image
+          src='/auth_bg.png'
+          alt='background'
+          fill={true}
+        />
+      </div>
+    </section>
   );
 };
 
-export default AllFuckingThingsOnOneSinglePageXD;
+export default Auth;
