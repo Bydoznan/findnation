@@ -11,4 +11,5 @@ Login: `admin@findnation.pl`
 
 Hasło: `qwer1234`
 
-## Linki
+## Link do YouTube (showcase)
+https://youtu.be/1K9JZSqV5tU
