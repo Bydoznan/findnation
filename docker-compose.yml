@@ -1,43 +1,35 @@
-version: "3.8"
+version: "3.9"
 
 services:
   postgres:
     image: postgres:15
+    container_name: lostfound-postgres
     environment:
       POSTGRES_USER: lostfound
       POSTGRES_PASSWORD: lostfoundpass
       POSTGRES_DB: lostfound_db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./db/init:/docker-entrypoint-initdb.d:ro
     ports:
       - "5432:5432"
-    networks:
-      - lf_net
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+    restart: always
 
   backend:
     build: ./backend
+    container_name: lostfound-backend
     environment:
       DATABASE_URL: postgresql://lostfound:lostfoundpass@postgres:5432/lostfound_db
-    depends_on:
-      - postgres
     ports:
       - "8000:8000"
-    networks:
-      - lf_net
+    depends_on:
+      - postgres
+    restart: always
 
   frontend:
     build: ./frontend
-    depends_on:
-      - backend
+    container_name: lostfound-frontend
     ports:
       - "3000:3000"
-    networks:
-      - lf_net
-
-volumes:
-  pgdata:
-
-networks:
-  lf_net:
-    driver: bridge
+    depends_on:
+      - backend
+    restart: always

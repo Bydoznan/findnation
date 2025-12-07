@@ -4,7 +4,6 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS found_items (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   title VARCHAR(150) NOT NULL,
-  category VARCHAR(50) NOT NULL,
   dominant_color VARCHAR(30) NOT NULL,
   description TEXT,
   distinctive_marks TEXT,
