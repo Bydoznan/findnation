@@ -13,6 +13,30 @@
   height: calc(100vh - 80px);
 }
 
+.dashboard-table thead td {
+  padding: 1rem 2rem;
+
+  background-color: #0f2648;
+  border: 2px solid black;
+
+  font: bold;
+  color: white;
+}
+
+.dashboard-table tbody td {
+  padding: 1rem 2rem;
+
+  border: 2px solid black;
+}
+
+.dashboard-table tr:nth-child(n) {
+  background-color: #ddd;
+}
+
+.dashboard-table tr:nth-child(2n) {
+  background-color: #fff;
+}
+
 body {
   width: 100%;
 
