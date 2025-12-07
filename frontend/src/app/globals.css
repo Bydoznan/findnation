@@ -2,15 +2,19 @@
 
 @theme inline {
   --font-bebas-neue: var(--font-bebas-neue);
+  --font-inter: var(--font-inter);
 
   --color-custom-light: #f9f9f9;
   --color-custom-blue: #0865c9;
   --color-custom-red: #d5233f;
 }
 
+.h-screen-wo-topbar {
+  height: calc(100vh - 80px);
+}
+
 body {
   width: 100%;
-  height: 100vh;
 
   background-color: #eee;
 }
