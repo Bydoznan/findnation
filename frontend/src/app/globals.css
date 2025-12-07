@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-bebas-neue: var(--font-bebas-neue);
+  --font-inter: var(--font-inter);
+
+  --color-custom-light: #f9f9f9;
+  --color-custom-blue: #0865c9;
+  --color-custom-red: #d5233f;
+}
+
+.h-screen-wo-topbar {
+  height: calc(100vh - 80px);
+}
+
+.dashboard-table thead td {
+  padding: 1rem 2rem;
+
+  background-color: #0f2648;
+  border: 2px solid black;
+
+  font: bold;
+  color: white;
+}
+
+.dashboard-table tbody td {
+  padding: 1rem 2rem;
+
+  border: 2px solid black;
+}
+
+.dashboard-table tr:nth-child(n) {
+  background-color: #ddd;
+}
+
+.dashboard-table tr:nth-child(2n) {
+  background-color: #fff;
+}
+
+body {
+  width: 100%;
+
+  background-color: #eee;
+}
