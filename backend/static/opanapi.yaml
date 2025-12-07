@@ -1,0 +1,162 @@
+openapi: 3.0.3
+info:
+  title: Central Lost & Found API
+  description: API prototypu umożliwiającego samorządom dodawanie danych o rzeczach znalezionych oraz eksport zbiorów danych do formatu maszynowego.
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /api/auth/login:
+    post:
+      summary: Logowanie urzędnika
+      description: Zwraca token sesyjny powiązany z domeną urzędu, dzięki któremu system rozpoznaje województwo oraz jednostkę zgłaszającą.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginIn"
+      responses:
+        "200":
+          description: Token wygenerowany poprawnie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  voivodeship:
+                    type: string
+                  city:
+                    type: string
+                  reporting_entity:
+                    type: string
+
+  /api/items:
+    post:
+      summary: Dodanie nowej rzeczy znalezionej
+      description: Urzędnik dodaje rekord rzeczy znalezionej. Wymagany nagłówek `token`.
+      parameters:
+        - name: token
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemIn"
+      responses:
+        "200":
+          description: Rekord utworzony poprawnie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  id:
+                    type: string
+
+  /api/export:
+    get:
+      summary: Eksport wszystkich rzeczy znalezionych
+      description: Zwraca pełną listę rzeczy znalezionych w formacie JSON.
+      responses:
+        "200":
+          description: Lista rzeczy znalezionych
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FoundItem"
+
+  /api/metadata.xml:
+    get:
+      summary: Metadane zbioru danych
+      description: Zwraca XML zgodny z zasadami portalu dane.gov.pl, wskazujący linki do danych.
+      responses:
+        "200":
+          description: Metadane XML
+          content:
+            application/xml:
+              schema:
+                type: string
+
+  /api/sample.csv:
+    get:
+      summary: Przykładowy zbiór danych (CSV)
+      description: Udostępnia przykładowy plik CSV zgodny z metadanymi.
+      responses:
+        "200":
+          description: Przykładowe dane CSV
+          content:
+            text/csv:
+              schema:
+                type: string
+
+components:
+  schemas:
+    LoginIn:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          example: urzad@um.warszawa.pl
+
+    ItemIn:
+      type: object
+      required:
+        - title
+        - dominant_color
+        - location_found
+      properties:
+        title:
+          type: string
+        dominant_color:
+          type: string
+        location_found:
+          type: string
+        date_found:
+          type: string
+          format: date
+        description:
+          type: string
+        distinctive_marks:
+          type: string
+
+    FoundItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        dominant_color:
+          type: string
+        description:
+          type: string
+        distinctive_marks:
+          type: string
+        location_found:
+          type: string
+        date_found:
+          type: string
+        voivodeship:
+          type: string
+        reporting_entity:
+          type: string

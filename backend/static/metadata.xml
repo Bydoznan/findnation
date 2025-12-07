@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dcat:Dataset
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:dct="http://purl.org/dc/terms/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+    <dct:title>Rzeczy znalezione – zbiór danych</dct:title>
+    <dct:description>Zestaw danych zawierający zgłoszenia rzeczy znalezionych z samorządów w Polsce. Dane dostępne są w formacie JSON oraz CSV, możliwe do automatycznego przetwarzania.</dct:description>
+
+    <dct:publisher>
+        <dct:Agent>
+            <dct:title>Jednostki samorządu terytorialnego</dct:title>
+        </dct:Agent>
+    </dct:publisher>
+
+    <dct:issued>2025-02-15</dct:issued>
+    <dct:modified>2025-02-15</dct:modified>
+
+    <dcat:keyword>zguby</dcat:keyword>
+    <dcat:keyword>rzeczy znalezione</dcat:keyword>
+    <dcat:keyword>samorząd</dcat:keyword>
+
+    <dct:spatial>Polska</dct:spatial>
+
+    <dct:license>https://creativecommons.org/publicdomain/zero/1.0/</dct:license>
+
+    <!-- Dystrybucja JSON -->
+    <dcat:distribution>
+        <dcat:Distribution>
+            <dct:title>Dane JSON – wszystkie zgłoszenia</dct:title>
+            <dcat:accessURL>http://localhost:8000/api/export</dcat:accessURL>
+            <dcat:downloadURL>http://localhost:8000/api/export</dcat:downloadURL>
+            <dct:format>application/json</dct:format>
+        </dcat:Distribution>
+    </dcat:distribution>
+
+    <!-- Dystrybucja CSV -->
+    <dcat:distribution>
+        <dcat:Distribution>
+            <dct:title>Przykładowe dane CSV</dct:title>
+            <dcat:accessURL>http://localhost:8000/api/sample.csv</dcat:accessURL>
+            <dcat:downloadURL>http://localhost:8000/api/sample.csv</dcat:downloadURL>
+            <dct:format>text/csv</dct:format>
+        </dcat:Distribution>
+    </dcat:distribution>
+
+</dcat:Dataset>

@@ -1,43 +1,82 @@
-version: "3.8"
+version: "3.9"
 
 services:
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: lostfound
-      POSTGRES_PASSWORD: lostfoundpass
-      POSTGRES_DB: lostfound_db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./db/init:/docker-entrypoint-initdb.d:ro
-    ports:
-      - "5432:5432"
-    networks:
-      - lf_net
-
   backend:
-    build: ./backend
-    environment:
-      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    build:
+      context: ./backend
+    container_name: lostfound-backend
+    restart: always
     depends_on:
       - postgres
+    environment:
+      DATABASE_URL: "postgresql://lostfound:lostfoundpass@postgres:5432/lostfound_db"
     ports:
       - "8000:8000"
     networks:
-      - lf_net
+      - lfnet
 
-  frontend:
-    build: ./frontend
-    depends_on:
-      - backend
+  postgres:
+    image: postgres:15
+    container_name: lostfound-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "lostfound"
+      POSTGRES_PASSWORD: "lostfoundpass"
+      POSTGRES_DB: "lostfound_db"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     ports:
-      - "3000:3000"
+      - "5432:5432"
     networks:
-      - lf_net
+      - lfnet
+
+networks:
+  lfnet:
 
 volumes:
   pgdata:
 
-networks:
-  lf_net:
-    driver: bridge
+
+# version: "3.8"
+
+# services:
+#   postgres:
+#     image: postgres:15
+#     environment:
+#       POSTGRES_USER: lostfound
+#       POSTGRES_PASSWORD: lostfoundpass
+#       POSTGRES_DB: lostfound_db
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+#       - ./db/init:/docker-entrypoint-initdb.d:ro
+#     ports:
+#       - "5432:5432"
+#     networks:
+#       - lf_net
+
+#   backend:
+#     build: ./backend
+#     environment:
+#       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+#     depends_on:
+#       - postgres
+#     ports:
+#       - "8000:8000"
+#     networks:
+#       - lf_net
+
+#   frontend:
+#     build: ./frontend
+#     depends_on:
+#       - backend
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       - lf_net
+
+# volumes:
+#   pgdata:
+
+# networks:
+#   lf_net:
+#     driver: bridge
